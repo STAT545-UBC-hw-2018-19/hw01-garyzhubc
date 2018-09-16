@@ -1,6 +1,6 @@
 ---
 title: "Explore dataset gapminder"
-output: html_document
+output: github_document
 ---
 First, load the dataset.
 ```{r load, message=FALSE}
