@@ -1,0 +1,63 @@
+---
+title: "Explore dataset gapminder"
+output: html_document
+---
+First, load the dataset.
+```{r load, message=FALSE}
+require(gapminder)
+require(dplyr)
+```
+Take a glance at the head of the dataset.
+```{r}
+head(gapminder)
+```
+What is the size of the dataset?
+```{r}
+nrow(gapminder)
+```
+How many columns are there in this dataset?
+```{r}
+ncol(gapminder)
+```
+How about the last few rows of the datset?
+```{r}
+tail(gapminder)
+```
+What is the time-span of this dataset?
+```{r}
+range(gapminder$year)
+```
+How far can lifeExpectancy go?
+```{r}
+range(gapminder$gdpPercap)
+```
+What are the countries here?
+```{r}
+unique(gapminder$country)
+```
+What is the mean life expectancy in 1952?
+```{r, message=FALSE, warning=FALSE}
+mgapminder1952 = aggregate(na.omit(gapminder[gapminder$year==1952,]),
+                           by=list(gapminder[gapminder$year==1952,]$continent),
+                           FUN=mean)
+mgapminder1952$country = NULL
+mgapminder1952$continent = NULL
+names(mgapminder1952)[1] = "continent"
+mgapminder1952
+```
+How does it compare to now (2007)?
+```{r, message=FALSE, warning=FALSE}
+mgapminder2007 = aggregate(na.omit(gapminder[gapminder$year==2007,]), 
+                           by=list(gapminder[gapminder$year==1952,]$continent), 
+                           FUN=mean)
+mgapminder2007$country = NULL
+mgapminder2007$continent = NULL
+names(mgapminder2007)[names(mgapminder2007) == "Group.1"] = "continent"
+mgapminder2007
+```
+Life expectancy in all continents growed at different levels.
+```{r}
+dlgapminder = cbind(mgapminder2007["continent"],mgapminder2007["lifeExp"]-mgapminder1952["lifeExp"])
+names(dlgapminder)[2] = "dLifeExp"
+dlgapminder
+```
