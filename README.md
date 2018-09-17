@@ -29,7 +29,7 @@ Tell me what kind of **fish** are they?
 ```
 # eat returns energy
 def eat(food):
-  if food = fish:
+  if food = FISH:
     return 2
   else:
     return 1
